@@ -101,6 +101,8 @@ app.use(
 
 app.use("/api/v1/news", require("./Api/news/news.routes"));
 
+app.use("/api/v1/stats", require("./Api/stats/stats.routes"));
+
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
