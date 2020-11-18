@@ -16,10 +16,10 @@ router
   .get(pollingStationController.getAllPollingStations)
   .post(
     auth.protect,
-    pollingStationController.setConstituencyId,
     auth.restrictTo("admin"),
     pollingStationController.createWithFile,
     pollingStationController.createFromFile,
+    pollingStationController.setConstituencyId,
     pollingStationController.createPollingStation
   );
 

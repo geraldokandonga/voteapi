@@ -2,7 +2,7 @@ const catchAsync = require("./catchAsync");
 const AppError = require("./appError");
 const APIFeatures = require("./apiFeatures");
 
-exports.deleteOne = (Model, resource) =>
+exports.deleteOne = Model =>
   catchAsync(async (req, res, next) => {
     // first find the resources
     let query = Model.findById(req.params.id);
@@ -26,7 +26,7 @@ exports.deleteOne = (Model, resource) =>
     });
   });
 
-exports.updateOne = (Model, resource) =>
+exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
     let query = Model.findById(req.params.id);
 
@@ -48,23 +48,17 @@ exports.updateOne = (Model, resource) =>
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc
-      }
+      data: doc
     });
   });
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
-    console.log(req.body);
-
     const newDoc = await Model.insertMany(req.body);
 
     res.status(201).json({
       status: "success",
-      data: {
-        data: newDoc
-      }
+      data: newDoc
     });
   });
 
@@ -82,9 +76,7 @@ exports.getOne = (Model, popOptions) =>
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc
-      }
+      data: doc
     });
   });
 
@@ -111,8 +103,6 @@ exports.getAll = Model =>
     res.status(200).json({
       status: "success",
       results: docs.length,
-      data: {
-        data: docs
-      }
+      data: docs
     });
   });

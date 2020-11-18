@@ -1,3 +1,4 @@
+const excelToJson = require("convert-excel-to-json");
 const pollingStation = require("./pollingstation.model");
 const catchAsync = require("../_utils/catchAsync");
 const AppError = require("../_utils/appError");
@@ -5,13 +6,13 @@ const factory = require("../_utils/handlerFactory");
 
 const upload = require("../_utils/multer");
 
-exports.createWithFile = upload.single("upload_polling-station"); // END IMAGE UPLOAD
-
 exports.setConstituencyId = (req, res, next) => {
   // Allow nested request
   if (!req.body.constituency) req.body.constituency = req.params.constituencyId;
   next();
 };
+
+exports.createWithFile = upload.single("upload_polling_stations");
 
 /**
  * Create from file
@@ -56,7 +57,7 @@ exports.createFromFile = catchAsync(async (req, res, next) => {
         type: input.type,
         startDateTime: input.startDateTime,
         endDateTime: input.endDateTime,
-        region: req.params.constituencyId
+        constituency: req.params.constituencyId
       };
     });
     // save to body

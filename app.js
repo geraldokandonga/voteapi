@@ -94,7 +94,10 @@ app.use(
   require("./Api/pollingstations/pollingstation.routes")
 );
 
-app.use("/api/v1/categories", require("./Api/categories/category.routes"));
+app.use(
+  "/api/v1/announcements",
+  require("./Api/announcements/announcement.routes")
+);
 
 app.use("/api/v1/news", require("./Api/news/news.routes"));
 

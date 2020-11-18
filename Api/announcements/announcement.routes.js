@@ -1,32 +1,30 @@
 const express = require("express");
-const categoryController = require("./categories.controller");
+const announcementController = require("./announcements.controllers");
 const auth = require("../_middleware/auth");
 
-const router = express.Router({
-  mergeParams: true
-});
+const router = express.Router();
 
 router
   .route("/")
-  .get(categoryController.getAllCategories)
+  .get(announcementController.getAllAnnouncements)
   .post(
     auth.protect,
     auth.restrictTo("admin"),
-    categoryController.createCategory
+    announcementController.createAnnouncement
   );
 
 router
   .route("/:id")
-  .get(categoryController.getCategory)
+  .get(announcementController.getAnnouncement)
   .patch(
     auth.protect,
     auth.restrictTo("admin"),
-    categoryController.updateCategory
+    announcementController.updateAnnouncement
   )
   .delete(
     auth.protect,
     auth.restrictTo("admin"),
-    categoryController.deleteCategory
+    announcementController.deleteAnnouncement
   );
 
 module.exports = router;
