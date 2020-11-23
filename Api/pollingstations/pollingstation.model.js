@@ -39,13 +39,11 @@ const pollingStationSchema = new Schema(
     },
     startDateTime: {
       type: Date,
-      default: Date.now(),
-      select: false
+      default: Date.now()
     },
     endDateTime: {
       type: Date,
-      default: Date.now(),
-      select: false
+      default: Date.now()
     }
   },
   {
@@ -63,10 +61,10 @@ pollingStationSchema.pre("save", function(next) {
 });
 
 pollingStationSchema.pre("^/find/", function(next) {
-  this.populate({
-    path: "constituency",
-    select: "name"
-  });
+  // this.populate({
+  //   path: "constituency",
+  //   select: "name"
+  // });
   next();
 });
 

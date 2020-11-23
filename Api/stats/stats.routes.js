@@ -3,8 +3,8 @@ const statsController = require("./stats.controller");
 
 const router = express.Router();
 
-router.get("/regions", statsController.countAllRegions);
-router.get("/constituencies", statsController.countAllConstituencies);
-router.get("/polling-stations", statsController.countAllPollingStations);
+router.get("/", statsController.countAll);
+router.get("/region/:id", statsController.countStatsPerRegion);
+
 
 module.exports = router;
