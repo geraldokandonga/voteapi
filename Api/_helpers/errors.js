@@ -1,4 +1,5 @@
 const AppError = require('../_utils/appError');
+
 const handleCastErrorDB = err => {
     const message = `Invalid ${err.path} : ${err.value}.`;
     return new AppError(message, 400);
@@ -6,7 +7,7 @@ const handleCastErrorDB = err => {
 
 const handleDuplicateFieldsDB = err => {
     const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
-    const message = `Duplicate fields value: ${value}. Please use another value`;
+    const message = `Duplicate fileds value: ${value}. Please use another value`;
     return new AppError(message, 400);
 }
 
@@ -29,10 +30,9 @@ const sendErrorDev = (err, req, res) => {
             stack: err.stack
         });
     }
-
     // B)RENDERED WEBSITE
     // console.log('ERROR', err);
-    return res.status(err.statusCode).render('error', {
+    return res.status(err.statusCode).json({
         title: 'Something went wrong!',
         msg: err.message
     });
@@ -62,7 +62,7 @@ const sendErrorProd = (err, req, res) => {
     // A) Operational error: Send message to client
     if (err.isOperational) {
         // console.log('ERROR', err);
-        return res.status(err.statusCode).render('error', {
+        return res.status(err.statusCode).json({
             title: 'Something went wrong!',
             msg: err.message
         });
@@ -72,7 +72,7 @@ const sendErrorProd = (err, req, res) => {
     // 1) Log error
     // console.log('ERROR', err);
     // 2 ) Send general message
-    return res.status(err.statusCode).render('error', {
+    return res.status(err.statusCode).json({
         title: 'Something went wrong!',
         msg: 'Please try again later.'
     });

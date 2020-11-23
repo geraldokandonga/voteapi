@@ -68,16 +68,7 @@ app.use(compression());
 // middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  res.locals.session = req.session;
   next();
-});
-
-app.use(function(req, res, next) {
-  res.setHeader(
-    "Content-Security-Policy",
-    "img-src 'self' https://res.cloudinary.com"
-  );
-  return next();
 });
 
 // ROUTES
