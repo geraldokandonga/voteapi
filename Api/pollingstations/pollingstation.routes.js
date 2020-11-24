@@ -12,6 +12,10 @@ router
   .get(pollingStationController.getDistances);
 
 router
+  .route("/clear-all/:constituencyId")
+  .delete(pollingStationController.deleteAllByConstituency);
+
+router
   .route("/")
   .get(pollingStationController.getAllPollingStations)
   .post(

@@ -20,9 +20,7 @@ const pollingStationSchema = new Schema(
       type: String
     },
     type: {
-      type: String,
-      default: "Fixed Points",
-      enum: ["Fixed Points", "Mobile Teams"]
+      type: String
     },
     code: {
       type: String,

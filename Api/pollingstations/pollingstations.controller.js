@@ -1,5 +1,5 @@
 const excelToJson = require("convert-excel-to-json");
-const pollingStation = require("./pollingstation.model");
+const PollingStation = require("./pollingstation.model");
 const catchAsync = require("../_utils/catchAsync");
 const AppError = require("../_utils/appError");
 const factory = require("../_utils/handlerFactory");
@@ -69,11 +69,28 @@ exports.createFromFile = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.createPollingStation = factory.createOne(pollingStation);
-exports.getPollingStation = factory.getOne(pollingStation);
-exports.getAllPollingStations = factory.getAll(pollingStation);
-exports.updatePollingStation = factory.updateOne(pollingStation);
-exports.deletePollingStation = factory.deleteOne(pollingStation);
+exports.deleteAllByConstituency = catchAsync(async (req, res, next) => {
+  // first find the resources
+
+  const docs = await PollingStation.deleteMany({
+    constituency: req.params.constituencyId
+  });
+
+  if (!docs) {
+    return next(new AppError("No document found with given param", 404));
+  }
+
+  res.status(204).json({
+    status: "success",
+    data: null
+  });
+});
+
+exports.createPollingStation = factory.createOne(PollingStation);
+exports.getPollingStation = factory.getOne(PollingStation);
+exports.getAllPollingStations = factory.getAll(PollingStation);
+exports.updatePollingStation = factory.updateOne(PollingStation);
+exports.deletePollingStation = factory.deleteOne(PollingStation);
 
 /**
  * Get polling stations within a given distance
@@ -93,7 +110,7 @@ exports.getPollingStationsWithin = catchAsync(async (req, res, next) => {
     );
   }
 
-  const pollingStations = await pollingStation.find({
+  const pollingStations = await PollingStation.find({
     location: {
       $geoWithin: {
         $centerSphere: [[lng, lat], radius]
@@ -128,7 +145,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
     );
   }
 
-  const distances = await pollingStation.aggregate([
+  const distances = await PollingStation.aggregate([
     {
       $geoNear: {
         near: {
